@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
-import { ref, onValue, runTransaction } from "firebase/database";
+import { ref, onValue, update, serverTimestamp } from "firebase/database";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { db, auth, googleProvider } from "./firebase";
 import "leaflet/dist/leaflet.css";
@@ -10,17 +10,20 @@ function markerColor(lot) {
   return lot.open > 0 ? "green" : "red";
 }
 
-// "i parked" = -1 open spot, "i left" = +1 open spot
-function changeCount(lotId, delta) {
-  runTransaction(ref(db, `lots/${lotId}/open`), (current) => {
-    const next = (current ?? 0) + delta;
-    return next < 0 ? undefined : next; // undefined = cancel
-  }).catch((err) => console.error("update blocked:", err.message));
+// "student parking" -> "Student parking"
+function capitalize(text = "") {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function spotsText(open) {
+  if (open <= 0) return "Full";
+  return `${open} ${open === 1 ? "spot" : "spots"} open`;
 }
 
 export default function App() {
   const [lots, setLots] = useState([]);
   const [user, setUser] = useState(null);
+  const [myCheckin, setMyCheckin] = useState(null);
 
   // live lot data
   useEffect(() => {
@@ -33,6 +36,32 @@ export default function App() {
   // who's signed in
   useEffect(() => onAuthStateChanged(auth, setUser), []);
 
+  // where am i parked?
+  useEffect(() => {
+    if (!user) {
+      setMyCheckin(null);
+      return;
+    }
+    return onValue(ref(db, `checkins/${user.uid}`), (snap) => setMyCheckin(snap.val()));
+  }, [user]);
+
+  // both changes happen together, or neither does
+  function park(lot) {
+    update(ref(db), {
+      [`lots/${lot.id}/open`]: lot.open - 1,
+      [`checkins/${user.uid}`]: { lotId: lot.id, time: serverTimestamp() },
+    }).catch((err) => alert("Couldn't check in: " + err.message));
+  }
+
+  function leave(lot) {
+    update(ref(db), {
+      [`lots/${lot.id}/open`]: lot.open + 1,
+      [`checkins/${user.uid}`]: null,
+    }).catch((err) => alert("Couldn't check out: " + err.message));
+  }
+
+  const parkedLot = myCheckin && lots.find((l) => l.id === myCheckin.lotId);
+
   return (
     <div style={{ position: "relative", height: "100vh", width: "100%" }}>
       <div
@@ -44,12 +73,13 @@ export default function App() {
       >
         {user ? (
           <>
-            {user.displayName}{" "}
-            <button onClick={() => signOut(auth)}>sign out</button>
+            {user.displayName}
+            {parkedLot && <> · Parked at <b>{parkedLot.name}</b></>}{" "}
+            <button onClick={() => signOut(auth)}>Sign out</button>
           </>
         ) : (
           <button onClick={() => signInWithPopup(auth, googleProvider)}>
-            sign in with google
+            Sign in with Google
           </button>
         )}
       </div>
@@ -72,22 +102,23 @@ export default function App() {
             pathOptions={{ color: markerColor(lot) }}
           >
             <Popup>
-              <b>{lot.name}</b> ({lot.type})
+              <b>{lot.name}</b> ({capitalize(lot.type)})
               <br />
-              {lot.label}
+              {capitalize(lot.label)}
               <br />
-              {lot.open > 0 ? `${lot.open} spots open` : "full"}
+              {spotsText(lot.open)}
               {lot.access === "student" && (
                 <div style={{ marginTop: 8 }}>
-                  {user ? (
-                    <>
-                      <button onClick={() => changeCount(lot.id, -1)} disabled={lot.open <= 0}>
-                        i parked
-                      </button>{" "}
-                      <button onClick={() => changeCount(lot.id, 1)}>i left</button>
-                    </>
+                  {!user ? (
+                    <i>Sign in to update.</i>
+                  ) : !myCheckin ? (
+                    <button onClick={() => park(lot)} disabled={lot.open <= 0}>
+                      I parked here
+                    </button>
+                  ) : myCheckin.lotId === lot.id ? (
+                    <button onClick={() => leave(lot)}>I left</button>
                   ) : (
-                    <i>sign in to update</i>
+                    <i>You're parked at {parkedLot?.name}.</i>
                   )}
                 </div>
               )}
