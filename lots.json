@@ -1,0 +1,12 @@
+{
+  "lots": {
+    "gate6-garage": { "name": "Gate 6 Garage", "type": "garage", "access": "student", "label": "student parking", "open": 40, "lat": 40.72325, "lng": -73.797472 },
+    "gate6": { "name": "Gate 6 Lot", "type": "lot", "access": "student", "label": "student parking", "open": 10, "lat": 40.7215, "lng": -73.797333 },
+    "gate6-staff": { "name": "Gate 6 Staff Lot", "type": "lot", "access": "staff", "label": "faculty, employee & reserved only", "open": 6, "lat": 40.721028, "lng": -73.796222 },
+    "gate1": { "name": "Gate 1 Lot", "type": "lot", "access": "student", "label": "student parking", "open": 0, "lat": 40.721, "lng": -73.792389 },
+    "gate4": { "name": "Gate 4 Lot", "type": "lot", "access": "student", "label": "student parking", "open": 15, "lat": 40.724972, "lng": -73.792972 },
+    "gate2-employee": { "name": "Gate 2 Employee Lot", "type": "lot", "access": "staff", "label": "employee only", "open": 4, "lat": 40.722528, "lng": -73.791028 },
+    "gate2-faculty": { "name": "Gate 2 Faculty Lot", "type": "lot", "access": "staff", "label": "faculty only", "open": 3, "lat": 40.722778, "lng": -73.792444 },
+    "gate2-student": { "name": "Gate 2 Student Lot", "type": "lot", "access": "student", "label": "student parking", "open": 8, "lat": 40.722111, "lng": -73.792944 }
+  }
+}
