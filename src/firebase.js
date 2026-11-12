@@ -11,9 +11,9 @@ const app = initializeApp({
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 });
 
-// on localhost, use a debug token instead of reCAPTCHA
+// on localhost, use the debug token from .env.local instead of reCAPTCHA
 if (import.meta.env.DEV) {
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.VITE_APPCHECK_DEBUG_TOKEN;
 }
 
 initializeAppCheck(app, {
