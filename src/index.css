@@ -230,3 +230,64 @@ body {
     display: none;
   }
 }
+
+/* ---------- consent popup ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.modal {
+  background: white;
+  border-radius: 22px;
+  max-width: 420px;
+  width: 100%;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.modal h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+.modal p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #555;
+}
+.modal ul {
+  padding-left: 20px;
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.link {
+  color: #e8484f;
+  font-weight: 700;
+}
+.legend-links {
+  border-top: 1px solid #eee;
+  padding-top: 6px;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+}
+.text-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #888;
+  cursor: pointer;
+  text-decoration: underline;
+}
