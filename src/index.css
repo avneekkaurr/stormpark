@@ -1,130 +1,229 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap");
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+html,
+body,
+#root {
   margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+body {
+  font-family: "Nunito", system-ui, sans-serif;
+  color: #2b2b2b;
+  background: #fff7f5;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-button {
-  color: #111;
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 4px 10px;
+/* ---------- buttons ---------- */
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font: inherit;
+  font-weight: 800;
   font-size: 14px;
   cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
 }
-
-button:hover {
-  background: #e2e2e2;
+.btn:active {
+  transform: scale(0.96);
 }
-
-button:disabled {
+.btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+.btn-primary {
+  background: #e8484f;
+  color: white;
+}
+.btn-primary:hover {
+  background: #d63b42;
+}
+.btn-soft {
+  background: #ffe3e3;
+  color: #b4232a;
+}
+.btn-soft:hover {
+  background: #ffd3d3;
+}
+
+/* ---------- header ---------- */
+.header {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 20px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: #e8484f;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+.logo-emoji {
+  font-size: 20px;
+}
+.brand h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+.brand p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.parked-chip {
+  background: #e9f9ef;
+  color: #1d7a46;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ---------- legend ---------- */
+.legend {
+  position: absolute;
+  bottom: 24px;
+  left: 12px;
+  z-index: 1000;
+  background: white;
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ---------- map pins ---------- */
+.lot-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+.lot-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: white;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  border: 3px solid white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s;
+}
+.lot-pin:hover {
+  transform: scale(1.12);
+}
+.pin-open {
+  background: #2fbf71;
+}
+.pin-full {
+  background: #e8484f;
+}
+.pin-staff {
+  background: #a0a4ab;
+}
+
+/* ---------- popups ---------- */
+.app .leaflet-container {
+  font-family: "Nunito", system-ui, sans-serif;
+}
+.app .leaflet-popup-content-wrapper {
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+.app .leaflet-popup-content {
+  margin: 14px 16px;
+  min-width: 190px;
+}
+.popup-title {
+  font-weight: 800;
+  font-size: 16px;
+}
+.popup-sub {
+  color: #888;
+  font-size: 12px;
+  margin: 2px 0 10px;
+}
+.popup-count {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.popup-count.open {
+  color: #1d9a5a;
+}
+.popup-count.full {
+  color: #d63b42;
+}
+.popup-note {
+  font-size: 13px;
+  color: #777;
+  font-style: italic;
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 520px) {
+  .brand p,
+  .user-name {
+    display: none;
+  }
 }
