@@ -208,10 +208,13 @@ body {
   font-weight: 800;
   margin-bottom: 10px;
 }
-.popup-count.open {
+.popup-count {
+  color: #2b2b2b;
+}
+.count-number {
   color: #1d9a5a;
 }
-.popup-count.full {
+.count-full {
   color: #d63b42;
 }
 .popup-note {

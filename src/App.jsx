@@ -143,9 +143,16 @@ export default function App() {
                 <div className="popup-note">Not available for student parking.</div>
               ) : (
                 <>
-                  <div className={`popup-count ${lot.open > 0 ? "open" : "full"}`}>
-                    {spotsText(lot.open)}
-                  </div>
+                  <div className="popup-count">
+  {lot.open > 0 ? (
+    <>
+      <span className="count-number">{lot.open}</span>{" "}
+      {lot.open === 1 ? "spot" : "spots"} open
+    </>
+  ) : (
+    <span className="count-full">Full</span>
+  )}
+</div>
 
                   {!user ? (
                     <div className="popup-note">Sign in to update this lot.</div>
